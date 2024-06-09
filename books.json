@@ -1,0 +1,1 @@
+[{"model": "books.book", "pk": 1, "fields": {"title": "FDCN", "chapters_count": 608}}, {"model": "books.book", "pk": 2, "fields": {"title": "CDSI", "chapters_count": 691}}]
