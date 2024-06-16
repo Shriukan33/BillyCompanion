@@ -4,6 +4,7 @@ from django.db import models
 class BookTitles(models.TextChoices):
     FDCN = "FDCN", "La Forteresse du Chaudron Noir"
     CDSI = "CDSI", "La Corne des Sables d'Ivoire"
+    LLDV = "LLDV", "La Lance de Valkar"
 
 
 class Book(models.Model):
