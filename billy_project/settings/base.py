@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "billy",
     "books",
     "rest_framework",
+    "user",
 ]
 
 MIDDLEWARE = [
@@ -73,13 +74,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "billy_project.wsgi.application"
 
 
+AUTH_USER_MODEL = "user.User"
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+POSTGRES_SERVICE_HOST = os.getenv("POSTGRES_SERVICE_HOST", "postgres")
+POSTGRES_SERVICE_PORT = os.getenv("POSTGRES_SERVICE_PORT", 5432)
+POSTGRES_USER = os.getenv("POSTGRES_APP_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_APP_PASSWORD")
+POSTGRES_DB_NAME = os.getenv("POSTGRES_APP_DB")
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": POSTGRES_SERVICE_HOST,
+        "PORT": POSTGRES_SERVICE_PORT,
+        "USER": POSTGRES_USER,
+        "PASSWORD": POSTGRES_PASSWORD,
+        "NAME": POSTGRES_DB_NAME,
     }
 }
 
@@ -117,7 +130,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "static/"
 
 # Default primary key field type
