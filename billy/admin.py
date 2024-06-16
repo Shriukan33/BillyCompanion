@@ -20,6 +20,7 @@ class ItemEffectInline(admin.TabularInline):
 class ItemAdmin(admin.ModelAdmin):
     list_display = ["name", "description", "type"]
     inlines = [ItemEffectInline]
+    list_filter = ["books", "type"]
 
 
 class ItemEffectAdmin(admin.ModelAdmin):

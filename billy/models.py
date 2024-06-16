@@ -38,6 +38,9 @@ class Item(models.Model):
     effects = models.ManyToManyField(
         Stat, through="ItemEffect", related_name="affected_stats"
     )
+    created_by = models.ForeignKey(
+        "user.User", on_delete=models.SET_NULL, null=True, blank=True, related_name="created_items"
+    )
 
     # Backward relationships
     billys: "Billy"
