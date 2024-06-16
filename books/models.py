@@ -15,7 +15,6 @@ class Book(models.Model):
 
     # Backward relationships
     chapters: "models.QuerySet[Chapter]"
-    successes: "models.QuerySet[Success]"
 
     def __str__(self):
         return self.title
@@ -30,7 +29,6 @@ class Success(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="successes")
 
     def __str__(self):
-        return f"{self.name} - {self.book.title}"
+        return f"{self.name} - {self.chapter.book.title}"

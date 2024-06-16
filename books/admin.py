@@ -11,7 +11,7 @@ class ChapterAdmin(admin.ModelAdmin):
 
 
 class SuccessAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "chapter", "book")
+    list_display = ("name", "description", "chapter",)
 
 
 admin.site.register(Book, BookAdmin)
