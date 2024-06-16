@@ -1,4 +1,5 @@
 from django.db import models
+
 from books.models import Book
 
 
@@ -37,7 +38,7 @@ class Item(models.Model):
     effects = models.ManyToManyField(
         Stat, through="ItemEffect", related_name="affected_stats"
     )
-    
+
     # Backward relationships
     billys: "Billy"
     items_effects: "ItemEffect"
@@ -87,12 +88,10 @@ class BillyStat(models.Model):
 
     def compute_value(self, action: str, pk: str):
         """Compute the value of the stat based on the items equipped by the Billy.
-        
+
         Called by the signal update_billystat in billy.signals.py.
         """
-        item_effects = ItemEffect.objects.filter(
-            item=pk, stat=self.stat
-        )
+        item_effects = ItemEffect.objects.filter(item=pk, stat=self.stat)
         value = self.value
         for effect in item_effects:
             if action == "add":
@@ -100,7 +99,6 @@ class BillyStat(models.Model):
             elif action == "remove":
                 value -= effect.value
         self.value = value
-
 
     def __str__(self):
         return f"{self.billy.name} - {self.stat.name}"
@@ -125,9 +123,14 @@ class Adventure(models.Model):
         Billy, on_delete=models.CASCADE, related_name="adventure"
     )
     visited_chapters = models.ManyToManyField(
-        "books.Chapter", related_name="adventures", blank=True, through=AdventureChapter,
+        "books.Chapter",
+        related_name="adventures",
+        blank=True,
+        through=AdventureChapter,
     )
-    successes = models.ManyToManyField("books.Success", related_name="adventures", blank=True)
+    successes = models.ManyToManyField(
+        "books.Success", related_name="adventures", blank=True
+    )
 
     @property
     def current_chapter(self):
